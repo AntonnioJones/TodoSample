@@ -1,3 +1,31 @@
-.task{
-  background-color: gray;
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: #ccd1d1;
 }
+body #app {
+  width: 50%;
+  margin-left: 25%;
+  background-color: white;
+  text-align: center;
+}
+body #app h1 {
+  margin: 0px;
+}
+body #app #taskForm {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  padding: 10px 5px 10px 5px;
+}
+body #app #taskList {
+  text-align: left;
+}
+body #app #taskList .task {
+  padding: 5px 0px 5px 0px;
+  border-bottom: 1px solid gray;
+}
+body #app #taskList .task h4 {
+  margin: 0px;
+}
+
+/*# sourceMappingURL=main.css.map */

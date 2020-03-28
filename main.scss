@@ -1,0 +1,38 @@
+body {
+  margin:0px;
+  padding:0px;
+  background-color: #ccd1d1;
+
+  #app{
+    width:50%;
+    margin-left:25%;
+    background-color: white;
+    text-align: center;
+
+    h1{
+      margin:0px;
+    }
+
+    #taskForm{
+      border-bottom: 1px solid black;
+      border-top: 1px solid black;
+      padding: 10px 5px 10px 5px;
+
+
+    }
+
+    #taskList{
+      text-align: left;
+      .task{
+
+        h4{
+          margin: 0px;
+        }
+        padding: 5px 0px 5px 0px;
+        border-bottom: 1px solid gray;
+
+      }
+    }
+
+  }
+}

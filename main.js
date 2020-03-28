@@ -61,10 +61,9 @@ class InputForm extends React.Component {
 
   render(){
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="taskInput">Task: </label>
-        <input id="taskInput" name="task" onChange={this.handleChange}></input>
-        <input type="submit" value="submit"></input>
+      <form onSubmit={this.handleSubmit}  className="d-flex justify-content-between" id="taskForm">
+        <input id="taskInput" name="task" placeholder="Task"  onChange={this.handleChange}></input>
+        <input type="submit" value="Add Task" className="btn btn-primary"></input>
       </form>
     )
   }
