@@ -55,14 +55,20 @@ class InputForm extends React.Component {
   }
 
   handleSubmit(event){
-    this.props.addTask(this.state.inputText);
+    if(this.state.inputText != ""){
+      this.props.addTask(this.state.inputText);
+    }
+    this.setState({
+      inputText: ""
+    })
     event.preventDefault();
+
   }
 
   render(){
     return (
       <form onSubmit={this.handleSubmit}  className="d-flex justify-content-between" id="taskForm">
-        <input id="taskInput" name="task" placeholder="Task"  onChange={this.handleChange}></input>
+        <input id="taskInput" size="40" name="task" placeholder="Task" maxLength="30" onChange={this.handleChange}></input>
         <input type="submit" value="Add Task" className="btn btn-primary"></input>
       </form>
     )
@@ -105,6 +111,10 @@ class Task extends React.Component{
     return(
       <div className="task">
         <h4>{this.props.taskText}</h4>
+        <div id="taskButtons">
+          <button  className="btn btn-secondary"><i className="fa fa-edit"></i></button>
+          <button className="btn btn-danger"><i className="fa fa-trash"></i></button>
+        </div>
       </div>
     );
   }

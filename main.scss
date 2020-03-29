@@ -3,11 +3,13 @@ body {
   padding:0px;
   background-color: #ccd1d1;
 
+
   #app{
-    width:50%;
-    margin-left:25%;
+    max-width: 800px;
+    min-width: 600px;
     background-color: white;
     text-align: center;
+    box-shadow: 2px 2px 5px #aaaaaa;
 
     h1{
       margin:0px;
@@ -22,14 +24,16 @@ body {
     }
 
     #taskList{
-      text-align: left;
-      .task{
 
-        h4{
-          margin: 0px;
-        }
-        padding: 5px 0px 5px 0px;
+      .task{
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 5px 5px 5px;
         border-bottom: 1px solid gray;
+
+        button{
+          margin-left: 5px;
+        }
 
       }
     }

@@ -4,10 +4,11 @@ body {
   background-color: #ccd1d1;
 }
 body #app {
-  width: 50%;
-  margin-left: 25%;
+  max-width: 800px;
+  min-width: 600px;
   background-color: white;
   text-align: center;
+  box-shadow: 2px 2px 5px #aaaaaa;
 }
 body #app h1 {
   margin: 0px;
@@ -17,15 +18,14 @@ body #app #taskForm {
   border-top: 1px solid black;
   padding: 10px 5px 10px 5px;
 }
-body #app #taskList {
-  text-align: left;
-}
 body #app #taskList .task {
-  padding: 5px 0px 5px 0px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 5px 5px 5px;
   border-bottom: 1px solid gray;
 }
-body #app #taskList .task h4 {
-  margin: 0px;
+body #app #taskList .task button {
+  margin-left: 5px;
 }
 
 /*# sourceMappingURL=main.css.map */
