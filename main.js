@@ -3,27 +3,61 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      tasks : ["Go for a run","Make Some breakfast"]
+      taskNames : ["Go for a run","Make Some breakfast"],
+      taskSections: []
     }
 
     this.addTask = this.addTask.bind(this);
+    this.addTaskSection = this.addTaskSection.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+  }
+
+
+
+
+  componentDidMount(){
+    this.addTaskSection();
+  }
+
+  deleteTask(index){
+    this.setState( (state) => ({
+      taskNames: state.taskNames.splice(index,1) ,
+      taskSections: state.taskSections.splice(index,1)
+    }));
+  }
+
+  addTaskSection(){
+    this.state.taskNames.forEach((item, i) => {
+      this.setState((state) => ({
+        taskSections: [...state.taskSections, <Task
+              key={i} taskText={item}
+              index={i} deleteTask={this.deleteTask}>
+            </Task>
+          ]
+      }));
+    });
+
   }
 
   addTask(item){
-    console.log(item);
-    this.setState((state,) => ({
-      tasks: [...state.tasks , item]
+    this.setState((state) => ({
+      taskNames: [item,...state.taskNames],
+      taskSections: [...state.taskSections,<Task key={state.taskSections.length} taskText={item}
+                      index={state.taskSections.length} deleteTask={this.deleteTask}></Task>]
     }));
-
   }
 
   clearTask(){
-    this.setState(
-      tasks : []
+    this.setState({
+      taskSections : []
+      }
     )
   }
 
+
+
   render(){
+    console.log(this.state.taskSections)
     return(
       <div id="app">
         <header>
@@ -31,7 +65,9 @@ class App extends React.Component {
         </header>
         <main>
           <InputForm addTask={this.addTask}></InputForm>
-          <ListOfTasks tasks={this.state.tasks}></ListOfTasks>
+          <section id="taskList">
+            {this.state.taskSections}
+          </section>
         </main>
       </div>
     )
@@ -75,45 +111,27 @@ class InputForm extends React.Component {
   }
 }
 
-class ListOfTasks extends React.Component {
-
-  constructor(props){
-    super(props)
-
-    this.createList = this.createList.bind(this);
-    this.items = [];
-  }
-
-  createList(){
-    this.items = [];
-    this.props.tasks.forEach((item, i) => {
-        this.items.push(<Task key={i} taskText={item}></Task>);
-    });
-
-  }
-
-  render(){
-    this.createList();
-    return(
-      <section id="taskList">
-        {this.items}
-      </section>
-    );
-  }
-}
-
 class Task extends React.Component{
   constructor(props){
     super(props)
+
+    this.deleteThisTask = this.deleteThisTask.bind(this);
+  }
+
+  deleteThisTask(){
+    this.props.deleteTask(this.props.index);
   }
 
   render(){
     return(
       <div className="task">
-        <h4>{this.props.taskText}</h4>
+        <div>
+          <input type="checkbox" id="selecter" name="selecter" value="selected"></input>
+          <label htmlFor="selecter">{this.props.taskText}</label>
+        </div>
         <div id="taskButtons">
           <button  className="btn btn-secondary"><i className="fa fa-edit"></i></button>
-          <button className="btn btn-danger"><i className="fa fa-trash"></i></button>
+          <button className="btn btn-danger" onClick={this.deleteThisTask}><i className="fa fa-trash"></i></button>
         </div>
       </div>
     );
