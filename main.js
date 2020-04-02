@@ -12,44 +12,51 @@ class App extends React.Component {
     this.deleteTask = this.deleteTask.bind(this);
   }
 
+  //used to create unique value for each task
+  id = 0;
 
-
-
+  //create the task section with the premade tasks
   componentDidMount(){
     this.addTaskSection();
   }
 
-  deleteTask(index){
+  //delete each task using a unique id
+  deleteTask(id){
     this.setState( (state) => ({
-      taskNames: state.taskNames.splice(index,1) ,
-      taskSections: state.taskSections.splice(index,1)
+      taskSections: state.taskSections.filter( (value) => {
+        return value.props.id != id;
+      })
     }));
   }
 
+  //adds the task section using premade names
   addTaskSection(){
     this.state.taskNames.forEach((item, i) => {
       this.setState((state) => ({
         taskSections: [...state.taskSections, <Task
-              key={i} taskText={item}
-              index={i} deleteTask={this.deleteTask}>
+              key={this.id++} taskText={item}
+              id={this.id} deleteTask={this.deleteTask}>
             </Task>
           ]
       }));
+
     });
 
   }
 
+  //add individual tasks
   addTask(item){
     this.setState((state) => ({
-      taskNames: [item,...state.taskNames],
-      taskSections: [...state.taskSections,<Task key={state.taskSections.length} taskText={item}
-                      index={state.taskSections.length} deleteTask={this.deleteTask}></Task>]
+      taskSections: [...state.taskSections,<Task key={this.id++} taskText={item}
+                      id={this.id} deleteTask={this.deleteTask}></Task>]
     }));
   }
 
+  //removes all the tasks and premade tasks
   clearTask(){
     this.setState({
-      taskSections : []
+      taskSections : [],
+      taskNames : []
       }
     )
   }
@@ -86,10 +93,12 @@ class InputForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  //controls the input field
   handleChange(event){
     this.setState({inputText: event.target.value})
   }
 
+  //called when the add task button is clicked
   handleSubmit(event){
     if(this.state.inputText != ""){
       this.props.addTask(this.state.inputText);
@@ -115,22 +124,41 @@ class Task extends React.Component{
   constructor(props){
     super(props)
 
+    this.state ={
+      editing: false
+    }
+
     this.deleteThisTask = this.deleteThisTask.bind(this);
+    this.editTask = this.editTask.bind(this)
   }
 
+  //Called when the delete button is clicked
   deleteThisTask(){
-    this.props.deleteTask(this.props.index);
+    this.props.deleteTask(this.props.id);
+  }
+
+  //start editing tasks
+  editTask(){
+    this.setState( (state) => ({
+      editing: true
+    }))
   }
 
   render(){
+    let label;
+    if(!this.state.editing){
+      label = <label htmlFor="selecter">{this.props.taskText}</label>
+    }else{
+      label = <input id="taskEdit" size="40" placeholder={this.props.taskText} maxLength="30"></input>
+    }
     return(
       <div className="task">
         <div>
           <input type="checkbox" id="selecter" name="selecter" value="selected"></input>
-          <label htmlFor="selecter">{this.props.taskText}</label>
+          {label}
         </div>
         <div id="taskButtons">
-          <button  className="btn btn-secondary"><i className="fa fa-edit"></i></button>
+          <button  className="btn btn-secondary" onClick={this.editTask}><i className="fa fa-edit"></i></button>
           <button className="btn btn-danger" onClick={this.deleteThisTask}><i className="fa fa-trash"></i></button>
         </div>
       </div>
