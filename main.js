@@ -125,11 +125,43 @@ class Task extends React.Component{
     super(props)
 
     this.state ={
-      editing: false
+      editing: false,
+      previousName: "",
+      taskName: ""
     }
 
+    this.handleChange = this.handleChange.bind(this);
     this.deleteThisTask = this.deleteThisTask.bind(this);
-    this.editTask = this.editTask.bind(this)
+    this.editTask = this.editTask.bind(this);
+  }
+
+
+    componentDidMount(){
+      this.setState((state) => ({
+        taskName: this.props.taskText
+      }))
+    }
+
+  //controls the input field
+  handleChange(event){
+    this.setState({taskName: event.target.value})
+  }
+
+  //start editing tasks
+  editTask(event){
+    if(this.state.editing && this.state.taskName === ""){
+      this.setState( (state) => ({
+        taskName: state.previousName,
+        editing: !state.editing
+      }))
+    }else{
+      this.setState( (state) => ({
+        previousName: state.taskName,
+        editing: !state.editing
+      }))
+    }
+
+    event.preventDefault();
   }
 
   //Called when the delete button is clicked
@@ -137,19 +169,16 @@ class Task extends React.Component{
     this.props.deleteTask(this.props.id);
   }
 
-  //start editing tasks
-  editTask(){
-    this.setState( (state) => ({
-      editing: true
-    }))
-  }
-
   render(){
     let label;
     if(!this.state.editing){
-      label = <label htmlFor="selecter">{this.props.taskText}</label>
+      label = <label htmlFor="selecter">{this.state.taskName}</label>
     }else{
-      label = <input id="taskEdit" size="40" placeholder={this.props.taskText} maxLength="30"></input>
+      label = <form onSubmit={this.editTask}>
+                <input id="taskEdit" size="40" placeholder={this.state.previousName} maxLength="30" autoFocus="autofocus" onChange={this.handleChange}></input>
+                <button className="btn btn-danger" onClick={this.editTask}><i className="fa fa-times"></i></button>
+                <button type="submit" value={this.state.taskName} className="btn btn-primary"><i className="fa fa-check"></i></button>
+              </form>
     }
     return(
       <div className="task">
