@@ -1,44 +1,42 @@
+$completedColor: gray;
+$inCompleteColor: black;
+
 body {
   margin:0px;
   padding:0px;
   background-color: #ccd1d1;
 
-
-  #app{
-    max-width: 100vw;
-    min-width: 600px;
-    background-color: white;
+  h1{
     text-align: center;
-    box-shadow: 2px 2px 5px #aaaaaa;
+  }
 
+  #taskForm{
+    padding: 5px 5px 10px 5px;
+    border-bottom: 1px solid gray;
+  }
 
-    label{
-      margin:0px;
-      font-size: 20px;
-    }
+  #taskList{
+    font-size: 20px;
 
-    #taskForm{
-      border-bottom: 1px solid black;
-      border-top: 1px solid black;
-      padding: 10px 5px 10px 5px;
+    .task{
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 5px 5px 5px;
+      border-bottom: 1px solid gray;
+      width: auto;
 
-
-    }
-
-    #taskList{
-
-      .task{
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 5px 5px 5px;
-        border-bottom: 1px solid gray;
-        width: auto;
-        button{
-          margin-left: 5px;
-        }
-
+      .completedLabel{
+        color: $completedColor;
       }
-    }
 
+      .incompleteLabel{
+        color: $inCompleteColor;
+      }
+
+      button{
+        margin-left: 5px;
+      }
+
+    }
   }
 }

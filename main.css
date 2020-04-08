@@ -3,29 +3,30 @@ body {
   padding: 0px;
   background-color: #ccd1d1;
 }
-body #app {
-  max-width: 100vw;
-  min-width: 600px;
-  background-color: white;
+body h1 {
   text-align: center;
-  box-shadow: 2px 2px 5px #aaaaaa;
 }
-body #app label {
-  margin: 0px;
+body #taskForm {
+  padding: 5px 5px 10px 5px;
+  border-bottom: 1px solid gray;
+}
+body #taskList {
   font-size: 20px;
 }
-body #app #taskForm {
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-  padding: 10px 5px 10px 5px;
-}
-body #app #taskList .task {
+body #taskList .task {
   display: flex;
   justify-content: space-between;
   padding: 5px 5px 5px 5px;
   border-bottom: 1px solid gray;
+  width: auto;
 }
-body #app #taskList .task button {
+body #taskList .task .completedLabel {
+  color: gray;
+}
+body #taskList .task .incompleteLabel {
+  color: black;
+}
+body #taskList .task button {
   margin-left: 5px;
 }
 

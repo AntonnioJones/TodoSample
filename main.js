@@ -64,9 +64,8 @@ class App extends React.Component {
 
 
   render(){
-    console.log(this.state.taskSections)
     return(
-      <div id="app">
+      <div id="app" className="container">
         <header>
           <h1>ToDo</h1>
         </header>
@@ -100,20 +99,20 @@ class InputForm extends React.Component {
 
   //called when the add task button is clicked
   handleSubmit(event){
+    event.preventDefault();
+
     if(this.state.inputText != ""){
       this.props.addTask(this.state.inputText);
     }
     this.setState({
       inputText: ""
     })
-    event.preventDefault();
-
   }
 
   render(){
     return (
       <form onSubmit={this.handleSubmit}  className="d-flex justify-content-between" id="taskForm">
-        <input id="taskInput" size="40" name="task" placeholder="Task" maxLength="30" onChange={this.handleChange}></input>
+        <input id="taskInput" size="40" name="task" placeholder="Task" maxLength="30" value={this.state.inputText} onChange={this.handleChange}></input>
         <input type="submit" value="Add Task" className="btn btn-primary"></input>
       </form>
     )
@@ -127,10 +126,12 @@ class Task extends React.Component{
     this.state ={
       editing: false,
       previousName: "",
-      taskName: ""
+      taskName: "",
+      completed: false
     }
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleEditChange = this.handleEditChange.bind(this);
+    this.handleCompleteChange = this.handleCompleteChange.bind(this);
     this.deleteThisTask = this.deleteThisTask.bind(this);
     this.editTask = this.editTask.bind(this);
   }
@@ -143,8 +144,15 @@ class Task extends React.Component{
     }
 
   //controls the input field
-  handleChange(event){
+  handleEditChange(event){
     this.setState({taskName: event.target.value})
+  }
+
+  //controls checkbox
+  handleCompleteChange(event){
+    this.setState({
+      completed: event.target.checked
+    })
   }
 
   //start editing tasks
@@ -172,10 +180,14 @@ class Task extends React.Component{
   render(){
     let label;
     if(!this.state.editing){
-      label = <label htmlFor="selecter">{this.state.taskName}</label>
+      if(this.state.completed){
+        label = <label htmlFor="selecter" className="completedLabel">{this.state.taskName}</label>
+      }else{
+        label = <label htmlFor="selecter" className="incompleteLabel">{this.state.taskName}</label>
+      }
     }else{
       label = <form onSubmit={this.editTask}>
-                <input id="taskEdit" size="40" placeholder={this.state.previousName} maxLength="30" autoFocus="autofocus" onChange={this.handleChange}></input>
+                <input id="taskEdit" size="40" placeholder={this.state.previousName} maxLength="30" autoFocus="autofocus" onChange={this.handleEditChange}></input>
                 <button className="btn btn-danger" onClick={this.editTask}><i className="fa fa-times"></i></button>
                 <button type="submit" value={this.state.taskName} className="btn btn-primary"><i className="fa fa-check"></i></button>
               </form>
@@ -183,7 +195,7 @@ class Task extends React.Component{
     return(
       <div className="task">
         <div>
-          <input type="checkbox" id="selecter" name="selecter" value="selected"></input>
+          <input type="checkbox" id="selecter" name="selecter" onChange={this.handleCompleteChange}></input>
           {label}
         </div>
         <div id="taskButtons">
